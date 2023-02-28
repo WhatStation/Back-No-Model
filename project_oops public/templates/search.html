@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        search_page
+        <br>
+        <label for="search">Search :</label>
+        <input type="text" id="search" name="search" maxlength="100" size="10">
+
+        <button onclick="getUser()">POST 요청 클릭</button>
+        <div id="userInfo"></div>
+        <script>
+            function getUser() {
+                const search = document.getElementById('search').value;
+                console.log(search)
+                const config = {
+                    method: "post",
+                    body: JSON.stringify({
+                      "search" : search
+                    })
+                  };
+                  fetch("/api/search/", config)
+                    .then(response => response.json())
+                    .then(data => {
+                        const userInfo = document.getElementById("userInfo");
+                        obj = data;
+                        console.log(obj)
+                        const t = document.createElement("pre");
+                        t.textContent = obj;
+                        userInfo.appendChild(t);
+                    })
+                    .catch(error => {
+                        console.log("fetch 에러!");
+                        const userInfo = document.getElementById("userInfo");
+                    });
+                
+                }
+        </script>
+
+    </body>
+</html>
